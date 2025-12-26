@@ -87,4 +87,3 @@ You can find the `sql file`here:
 | :------ | :--- | :------- | :----- | :------ | :------------ |
 | blog_id | INT  | NO       | PK, FK | -       | REF blogs(id) |
 | url_id  | INT  | NO       | PK, FK | -       | REF urls(id)  |
-

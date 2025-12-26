@@ -1,0 +1,6 @@
+# Environment
+.pgdata/
+.env
+
+# Javascript / Typescript
+node_modules/
