@@ -1,11 +1,11 @@
 # Portfolio
 
-| Software Development Life Cycle                           |
-| --------------------------------------------------------- |
-| [Requirements](./docs/project-requirements.md)            |
-| [Back-end Plan](./docs/back-end/README.md)                |
-| [Database Plan](./docs/database/database-architecture.md) |
+| Software Development Life Cycle                                |
+| -------------------------------------------------------------- |
+| [Requirements](./docs/SDL/project-requirements.md)             |
+| [Back-end Plan](./docs/SDLC/back-end/README.md)                |
+| [Database Plan](./docs/SDLC/database/database-architecture.md) |
 
  <!--                                           |     | [Front-end Plan](./docs/front-end/design/design.md) | -->
 
-![Project Architecture](./docs/img/project-architecture.png)
+![Project Architecture](./docs/SDLC/img/project-architecture.png)
