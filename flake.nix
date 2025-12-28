@@ -40,15 +40,13 @@
         echo ""
         echo "=== Database Quick Commands ==="
         echo "db-start : Starts a PostgreSQL Database"
-        echo "db-permission : Give permission to the user if required"
         echo "db-stop  : Stop the PostgreSQL Database"
         echo "db-reset  : Reset All the data of the PostgreSQL Database"
         echo "> IMPORTANT: Once run one of this commands you need to exit this shell to be able to run another Database Quick Command !!"
 
-        alias db-start="nix develop github:K1-mikaze/Nix-Environments?dir=flakes/database/postgresql"
-        alias db-stop="nix run github:K1-mikaze/Nix-Environments?dir=flakes/database/postgresql#stop"
-        alias db-reset="nix run github:K1-mikaze/Nix-Environments?dir=flakes/database/postgresql#reset"
-        alias db-permissions="nix run github:K1-mikaze/Nix-Environments?dir=flakes/database/postgresql#connect"
+        alias db-start="nix develop --refresh github:K1-mikaze/Nix-Environments/main?dir=flakes/database/postgresql"
+        alias db-stop="nix run github:K1-mikaze/Nix-Environments/main?dir=flakes/database/postgresql#stop"
+        alias db-reset="nix run github:K1-mikaze/Nix-Environments/main?dir=flakes/database/postgresql#reset"
       '';
 
       env = mkEnv {};
