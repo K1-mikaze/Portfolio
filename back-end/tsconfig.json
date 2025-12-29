@@ -4,7 +4,7 @@
     "module": "commonjs",
     "lib": ["ES2020"],
     "outDir": "./build",
-    "rootDir": "./src",
+    "rootDir": "./",
     "strict": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
@@ -19,6 +19,6 @@
     //   "@prisma/client": ["node_modules/@prisma/client"]
     // }
   },
-  "include": ["src/**/*"],
-  // "exclude": ["node_modules", "build"]
+  "include": ["src/**/*", "knexfile.ts"],
+  "exclude": ["node_modules", "build", "tsconfig.json" , "nodemon.js", "package.json", "package-lock.json"]
 }

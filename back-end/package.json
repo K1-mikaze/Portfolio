@@ -6,7 +6,11 @@
   "scripts": {
     "dev": "nodemon",
     "build": "tsc",
-    "start": "node build/index.js"
+    "start": "node build/src/index.js",
+    "migrate:make": "echo 'add the file name'; npx knex migrate:make",
+    "migrate:latest": "npx knex migrate:latest",
+    "migrate:rollback": "npx knex migrate:rollback",
+    "migrate:status": "npx knex migrate:status"
   },
   "keywords": [],
   "author": "",
@@ -18,6 +22,7 @@
     "express-slow-down": "^3.0.1",
     "express-validator": "^7.3.1",
     "helmet": "^8.1.0",
+    "knex": "^3.1.0",
     "pg": "^8.16.3"
   },
   "devDependencies": {
