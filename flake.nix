@@ -4,7 +4,7 @@
 
     === Dev Environments
     - front-end
-    - back-end
+    - Backend
   '';
 
   inputs = {
@@ -26,30 +26,107 @@
       biome
     ];
 
-    commonEnvironmentVariables = {};
+    commonEnvironmentVariables = {
+      API_PORT = 5678;
+    };
 
     mkEnv = extraEnv: commonEnvironmentVariables // extraEnv;
   in {
-    back-end = pkgs.mkShell {
-      buildInputs = [] ++ commonTools;
+    # Environments
+    devShells."${system}".Backend = pkgs.mkShell {
+      buildInputs = with pkgs; [postgresql] ++ commonTools;
 
       shellHook = ''
+        cd back-end/
         echo "> Consider go to the folder back-end/ and install the dependencies if not installed"
         echo "- npm install"
         echo "==> Welcome to the Back-end Development Environment <=="
-        echo ""
-        echo "=== Database Quick Commands ==="
-        echo "db-start : Starts a PostgreSQL Database"
-        echo "db-stop  : Stop the PostgreSQL Database"
-        echo "db-reset  : Reset All the data of the PostgreSQL Database"
-        echo "> IMPORTANT: Once run one of this commands you need to exit this shell to be able to run another Database Quick Command !!"
-
-        alias db-start="nix develop --refresh github:K1-mikaze/Nix-Environments/main?dir=flakes/database/postgresql"
-        alias db-stop="nix run github:K1-mikaze/Nix-Environments/main?dir=flakes/database/postgresql#stop"
-        alias db-reset="nix run github:K1-mikaze/Nix-Environments/main?dir=flakes/database/postgresql#reset"
       '';
 
-      env = mkEnv {};
+      env = mkEnv {
+        DATABASE_URL = "postgresql://nix_user:nix_pass@localhost:5432/nix_db";
+        DB_NAME = "nix_db";
+        DB_HOST = "localhost";
+        DB_PORT = 5432;
+        DB_USER = "nix_user";
+        DB_PASS = "nix_pass";
+        ENV_MODE = "development";
+      };
+    };
+
+    # Builds
+    packages."${system}".Backend = pkgs.buildNpmPackage {
+      name = "portfolio-backend";
+      version = "0.0.1";
+      src = ./back-end;
+      npmDepsHash = "sha256-RjRLC64hsl8L/eAY+7DLF64ch7i8SmMRqAzHeOhzx/4=";
+
+      # copies the build output to the Nix store
+      buildPhase = ''
+        npm run build
+      '';
+
+      installPhase = ''
+        mkdir -p $out
+        cp -r build package.json node_modules $out/
+      '';
+
+      nativeBuildInputs = with pkgs; [nodejs]; # Build Dependency
+
+      buildInputs = with pkgs; [nodejs]; # Runtime dependency
+
+      # doCheck = true;
+      # checkPhase = "npm run start";
+    };
+
+    # Runnables
+    apps."${system}" = {
+      Backend = {
+        type = "app";
+        program = let
+          appEnvironment = {
+          };
+          backend = self.packages."${system}".Backend;
+          runtimeDeps = with pkgs; [nodejs];
+          script = pkgs.writeShellScriptBin "run-app" ''
+            ${pkgs.lib.concatMapStrings (
+              name: "export ${name}='${toString (builtins.getAttr name appEnvironment)}'\n"
+            ) (builtins.attrNames appEnvironment)}
+
+                        export PATH="${pkgs.lib.makeBinPath runtimeDeps}:$PATH"
+
+                        cd ${backend}
+                        exec npm run start
+          '';
+        in "${script}/bin/run-app";
+      };
+
+      db-start = {
+        type = "app";
+        program = let
+          script = pkgs.writeShellScriptBin "run-database" ''
+            nix develop --refresh github:K1-mikaze/Nix-Environments/main?dir=flakes/database/postgresql
+          '';
+        in "${script}/bin/run-database";
+      };
+
+      db-stop = {
+        type = "app";
+        program = let
+          script = pkgs.writeShellScriptBin "stop-database" ''
+            nix run github:K1-mikaze/Nix-Environments/main?dir=flakes/database/postgresql#stop
+          '';
+        in "${script}/bin/stop-database";
+      };
+
+      db-reset = {
+        type = "app";
+        program = let
+          script = pkgs.writeShellScriptBin "reset-database" ''
+            nix run github:K1-mikaze/Nix-Environments/main?dir=flakes/database/postgresql#reset
+          '';
+        in "${script}/bin/reset-database";
+      };
     };
   };
 }

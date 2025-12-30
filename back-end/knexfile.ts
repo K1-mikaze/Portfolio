@@ -5,8 +5,8 @@ const config: Record<string, Knex.Config> = {
   development: {
     client: "pg",
     connection: {
-      host: environment.DB_HOST || "127.0.0.1",
-      port: Number(environment.DB_PORT) || 5432,
+      host: environment.DB_HOST,
+      port: Number(environment.DB_PORT),
       user: environment.DB_USER,
       password: environment.DB_PASS,
       database: environment.DB_NAME,
