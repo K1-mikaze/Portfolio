@@ -14,5 +14,4 @@ Express is a JavaScript framework that make really easy to build APIs, is conjuc
 - `express-slow-down` Complement with rate-limiting, slow down responses after many repeted attempts instead of blocking.
 - `cors` Allows to control which domains can call the API
 - `helmet` set security headers to mitigate common web attacks.
-- `dotenv` let us use environment variables for the API configuration.
-- `Prisma` an ORM to make postgresql transactions more secure.
+- `Knex.js` an ORM to make postgresql transactions more secure.
