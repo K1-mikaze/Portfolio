@@ -7,10 +7,12 @@
     "dev": "nodemon",
     "build": "tsc",
     "start": "node build/src/index.js",
-    "migrate:make": "echo 'add the file name'; npx knex migrate:make",
+    "migrate:make": "npx knex migrate:make",
     "migrate:latest": "npx knex migrate:latest",
     "migrate:rollback": "npx knex migrate:rollback",
-    "migrate:status": "npx knex migrate:status"
+    "migrate:status": "npx knex migrate:status",
+    "seeds:make": "npx knex seed:make",
+    "seeds:run": "npx knex seed:run"
   },
   "keywords": [],
   "author": "",
@@ -20,7 +22,6 @@
     "express": "^5.2.1",
     "express-rate-limit": "^8.2.1",
     "express-slow-down": "^3.0.1",
-    "express-validator": "^7.3.1",
     "helmet": "^8.1.0",
     "knex": "^3.1.0",
     "pg": "^8.16.3"
