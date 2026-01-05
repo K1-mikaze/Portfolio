@@ -1,10 +1,10 @@
 {
   description = ''
-    === TypeScript Development Environment
+    === Portfolio Development Environment
 
-    === Dev Environments
-    - front-end
-    - Backend
+    !!! Dev Environments
+    - Frontend => Environment
+    - Backend => Environment , Build and Run
   '';
 
   inputs = {
@@ -21,7 +21,6 @@
     commonTools = with pkgs; [
       nodejs
       typescript-language-server
-      typescript
       prettier
       biome
     ];
@@ -33,50 +32,75 @@
     mkEnv = extraEnv: commonEnvironmentVariables // extraEnv;
   in {
     # Environments
-    devShells."${system}".Backend = pkgs.mkShell {
-      buildInputs = with pkgs; [postgresql] ++ commonTools;
 
-      shellHook = ''
-        cd back-end/
-        echo "> Consider go to the folder back-end/ and install the dependencies if not installed"
-        echo "- npm install"
-        echo "==> Welcome to the Back-end Development Environment <=="
-      '';
+    # Backend
+    devShells."${system}" = {
+      Backend = pkgs.mkShell {
+        buildInputs = with pkgs;
+          [
+            postgresql
+            typescript
+          ]
+          ++ commonTools;
 
-      env = mkEnv {
-        DATABASE_URL = "postgresql://nix_user:nix_pass@localhost:5432/nix_db";
-        DB_NAME = "nix_db";
-        DB_HOST = "localhost";
-        DB_PORT = 5432;
-        DB_USER = "nix_user";
-        DB_PASS = "nix_pass";
-        ENV_MODE = "development";
+        shellHook = ''
+          echo "> Consider go to the folder back-end/ and install the dependencies if not installed"
+          echo "- npm install"
+          echo "==> Welcome to the Back-end Development Environment <=="
+        '';
+
+        env = mkEnv {
+          DATABASE_URL = "postgresql://nix_user:nix_pass@localhost:5432/nix_db";
+          DB_NAME = "nix_db";
+          DB_HOST = "localhost";
+          DB_PORT = 5432;
+          DB_USER = "nix_user";
+          DB_PASS = "nix_pass";
+          ENV_MODE = "development";
+        };
+      };
+
+      # Frontend
+      Frontend = pkgs.mkShell {
+        buildInputs = with pkgs; [vscode-css-languageserver] ++ commonTools;
+
+        shellHook = ''
+          echo "> Consider go to the folder front-end/ and install the dependencies if not installed"
+          echo "- npm install"
+          echo "==> Welcome to the Back-end Development Environment <=="
+        '';
+
+        env =
+          mkEnv {
+          };
       };
     };
 
     # Builds
-    packages."${system}".Backend = pkgs.buildNpmPackage {
-      name = "portfolio-backend";
-      version = "0.0.1";
-      src = ./back-end;
-      npmDepsHash = "sha256-RjRLC64hsl8L/eAY+7DLF64ch7i8SmMRqAzHeOhzx/4=";
+    packages."${system}" = {
+      Backend = pkgs.buildNpmPackage {
+        name = "portfolio-backend";
+        version = "0.0.1";
+        src = ./back-end;
+        npmDepsHash = "sha256-01uYVt7Y3DxMdUbJhkzqMeV/oz/APmpDaiZUQEjNY4s=";
 
-      # copies the build output to the Nix store
-      buildPhase = ''
-        npm run build
-      '';
+        # copies the build output to the Nix store
+        buildPhase = ''
+          npm run build
+        '';
 
-      installPhase = ''
-        mkdir -p $out
-        cp -r build package.json node_modules $out/
-      '';
+        installPhase = ''
+          mkdir -p $out
+          cp -r build package.json node_modules $out/
+        '';
 
-      nativeBuildInputs = with pkgs; [nodejs]; # Build Dependency
+        nativeBuildInputs = with pkgs; [nodejs]; # Build Dependency
 
-      buildInputs = with pkgs; [nodejs]; # Runtime dependency
+        buildInputs = with pkgs; [nodejs]; # Runtime dependency
 
-      # doCheck = true;
-      # checkPhase = "npm run start";
+        # doCheck = true;
+        # checkPhase = "npm run start";
+      };
     };
 
     # Runnables
@@ -92,11 +116,9 @@
             ${pkgs.lib.concatMapStrings (
               name: "export ${name}='${toString (builtins.getAttr name appEnvironment)}'\n"
             ) (builtins.attrNames appEnvironment)}
-
-                        export PATH="${pkgs.lib.makeBinPath runtimeDeps}:$PATH"
-
-                        cd ${backend}
-                        exec npm run start
+            export PATH="${pkgs.lib.makeBinPath runtimeDeps}:$PATH"
+            cd ${backend}
+            exec npm run start
           '';
         in "${script}/bin/run-app";
       };
