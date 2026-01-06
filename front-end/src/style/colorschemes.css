@@ -1,0 +1,49 @@
+:root {
+  --base-clr: #f9f5d7;
+  --base-secondary-clr: #fbf1c7;
+  --border-clr: #98971a;
+  --border-secondary-clr: #d79921;
+  --hover-clr: #ebdbb2;
+  --text-clr: #282828;
+  --text-secondary-clr: #504945;
+}
+
+.GRUVBOX_LIGHT {
+  --base-clr: #f9f5d7;
+  --base-secondary-clr: #fbf1c7;
+  --border-clr: #98971a;
+  --border-secondary-clr: #d79921;
+  --hover-clr: #ebdbb2;
+  --text-clr: #282828;
+  --text-secondary-clr: #504945;
+}
+
+.GRUVBOX_DARK {
+  --base-clr: #1d2021;
+  --base-secondary-clr: #282828;
+  --border-clr: #b8bb26;
+  --border-secondary-clr: #f1bd2f;
+  --hover-clr: #3c3836;
+  --text-clr: #fbf1c7;
+  --text-secondary-clr: #ebdbb2;
+}
+
+.CATPPUCCIN_MOCHA {
+  --base-clr: #1e1e2e;
+  --base-secondary-clr: #313244;
+  --border-clr: #89b4fa;
+  --border-secondary-clr: #cba6f7;
+  --hover-clr: #45475a;
+  --text-clr: #cdd6f4;
+  --text-secondary-clr: #bac2de;
+}
+
+.CATPPUCCIN_LATTE {
+  --base-clr: #eff1f5;
+  --base-secondary-clr: #e6e9ef;
+  --border-clr: #7287fd;
+  --border-secondary-clr: #8839ef;
+  --hover-clr: #ccd0da;
+  --text-clr: #4c4f69;
+  --text-secondary-clr: #5c5f77;
+}
