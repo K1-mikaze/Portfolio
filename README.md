@@ -6,6 +6,6 @@
 | [Back-end Plan](./docs/SDLC/back-end/README.md)                |
 | [Database Plan](./docs/SDLC/database/database-architecture.md) |
 
- <!--                                           |     | [Front-end Plan](./docs/front-end/design/design.md) | -->
+This project is still in Development and can be changed at any moment
 
 ![Project Architecture](./docs/SDLC/img/project-architecture.png)
