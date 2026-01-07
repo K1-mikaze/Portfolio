@@ -64,20 +64,4 @@ const getBlogsByTag: RequestHandler = async (request, response) => {
   }
 };
 
-// Route: /blogs/match
-// const getBlogsByMatch: RequestHandler = async (request, response) => {
-//   try {
-//     const match: string | null = String(request.params.match) || null;
-//
-//     if (match === null)
-//       return response.status(400).json({ error: "Bad Request" });
-//
-//     const dbResponse = await db("blogs").whereLike("blogs.title", "=", match);
-//
-//     return response.status(200).json(dbResponse);
-//   } catch (error) {
-//     console.error("!!! Error getBlogsByMatch :\n", error);
-//     response.status(500).json({ error: "Internal Server Error" });
-//   }
-// };
 export { getBlogs, getBlogsByTag };
