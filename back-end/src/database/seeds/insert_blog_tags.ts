@@ -15,18 +15,34 @@ export async function seed(knex: Knex): Promise<void> {
       { name: "JavaScript" },
       { name: "TypeScript" },
       { name: "Rust" },
+      { name: "Flutter" },
     ])
     .returning("id");
 
   const blogs = await knex("blogs")
     .insert([
-      { title: "test", description: "This is a testt", url: "www.google.com" },
+      {
+        title: "test",
+        description: "This is a testt",
+        url: "www.google.com",
+        language: "ENGLISH",
+      },
+      {
+        title: "Prueba",
+        description: "Esta es una prueba",
+        url: "www.google.com",
+        language: "SPANISH",
+      },
     ])
     .returning("id");
 
-  let blog_tags = tags.map((tag) => {
+  let blog_tags_english = tags.map((tag) => {
     return { tag_id: tag.id, blog_id: blogs[0].id };
   });
 
-  await knex("blog_tags").insert(blog_tags);
+  let blog_tags_spanish = tags.map((tag) => {
+    return { tag_id: tag.id, blog_id: blogs[1].id };
+  });
+  await knex("blog_tags").insert(blog_tags_english);
+  await knex("blog_tags").insert(blog_tags_spanish);
 }
