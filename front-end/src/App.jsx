@@ -22,6 +22,18 @@ const blogsReducer = (state, action) => {
   }
 };
 
+const useStorageState = (key, initialState) => {
+  const [value, setValue] = React.useState(
+    localStorage.getItem(key) || initialState,
+  );
+
+  React.useEffect(() => {
+    localStorage.setItem(key, value);
+  }, [value, key]);
+  return [value, setValue];
+};
+
+//Component
 function App() {
   const url = "http://localhost:5678/blogs";
 
@@ -52,10 +64,20 @@ function App() {
     handleFetchBlogs();
   }, [handleFetchBlogs]);
 
+  const [language, setLanguage] = useStorageState("language", "SPANISH");
+
+  const handleLanguage = () => {
+    if (language === "ENGLISH") {
+      setLanguage("SPANISH");
+    } else {
+      setLanguage("ENGLISH");
+    }
+  };
+
   return (
     <>
       <div className="grid-container CATPPUCCIN_MOCHA">
-        <StaticAside />
+        <StaticAside language={language} HandleLanguage={handleLanguage} />
         <article>
           {blogs.isError && <p>Something Went Wrong</p>}
           {blogs.isLoading ? <p>Loading ...</p> : <Center list={blogs.data} />}
