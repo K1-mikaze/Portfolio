@@ -8,14 +8,14 @@ export async function seed(knex: Knex): Promise<void> {
 
   const tags = await knex("tags")
     .insert([
-      { name: "Linux" },
-      { name: "NixOS" },
-      { name: "Nix" },
-      { name: "Java" },
-      { name: "JavaScript" },
-      { name: "TypeScript" },
-      { name: "Rust" },
-      { name: "Flutter" },
+      { name: "LINUX" },
+      { name: "NIXOS" },
+      { name: "NIX" },
+      { name: "JAVA" },
+      { name: "JAVASCRIPT" },
+      { name: "TYPESCRIPT" },
+      { name: "RUST" },
+      { name: "FLUTTER" },
     ])
     .returning("id");
 
@@ -25,13 +25,13 @@ export async function seed(knex: Knex): Promise<void> {
         title: "test",
         description: "This is a testt",
         url: "www.google.com",
-        language: "ENGLISH",
+        language: "EN",
       },
       {
         title: "Prueba",
         description: "Esta es una prueba",
         url: "www.google.com",
-        language: "SPANISH",
+        language: "ES",
       },
     ])
     .returning("id");

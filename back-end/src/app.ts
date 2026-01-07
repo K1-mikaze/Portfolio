@@ -1,5 +1,6 @@
 import express from "express";
-import { getBlogs } from "./controller/blogs_controller";
+import blogRouter from "./route/blog_routes";
+import tagRouter from "./route/tag_routes";
 import { speedLimiter, requestLimiter } from "./configuration/limiter";
 import cors from "cors";
 import helmet from "helmet";
@@ -12,6 +13,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(speedLimiter);
 app.use(requestLimiter);
-app.use(getBlogs);
+app.use(blogRouter);
+app.use(tagRouter);
 
 export default app;
