@@ -3,11 +3,19 @@ import type { Knex } from "knex";
 export async function up(knex: Knex): Promise<void> {
   await knex.schema.createTable("blogs", (table) => {
     table.increments("id").primary();
-    table.string("title", 150).notNullable();
-    table.text("description").notNullable();
-    table.text("image");
+    table.text("image_path").notNullable();
     table.text("url").notNullable();
     table.timestamps(true, true);
+  });
+
+  await knex.schema.createTable("blog_translations", (table) => {
+    table.increments("id").primary();
+    table.integer("blog_id").notNullable();
+    table.string("title", 150).notNullable();
+    table.text("description").notNullable();
+    table.enum("language", ["EN", "ES"]).notNullable();
+
+    table.foreign("blog_id").references("id").inTable("blogs");
   });
 
   await knex.schema.createTable("tags", (table) => {
@@ -30,5 +38,6 @@ export async function up(knex: Knex): Promise<void> {
 export async function down(knex: Knex): Promise<void> {
   await knex.schema.dropTable("blog_tags");
   await knex.schema.dropTable("tags");
+  await knex.schema.dropTable("blogs_translations");
   await knex.schema.dropTable("blogs");
 }
