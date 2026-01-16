@@ -20,7 +20,6 @@
 
     commonTools = with pkgs; [
       nodejs
-      typescript-language-server
       prettier
       biome
     ];
@@ -62,7 +61,7 @@
 
       # Frontend
       Frontend = pkgs.mkShell {
-        buildInputs = with pkgs; [vscode-css-languageserver] ++ commonTools;
+        buildInputs = [] ++ commonTools;
 
         shellHook = ''
           echo "> Consider go to the folder front-end/ and install the dependencies if not installed"

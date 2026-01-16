@@ -1,8 +1,9 @@
 import { Router } from "express";
-import * as BLOG from "../controller/blogs_controller";
+import * as BLOGS from "../controller/blogs_controller";
 
-const router = Router();
+const blogRouter = Router({ mergeParams: true });
 
-router.get("/blogs", BLOG.getBlogs);
+blogRouter.get("/blogs", BLOGS.getBlogs);
+blogRouter.get("/blogs/:tag", BLOGS.getBlogsByTag);
 
-export default router;
+export default blogRouter;
