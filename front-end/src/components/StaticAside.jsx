@@ -1,4 +1,3 @@
-import React from "react";
 import meImg from "../assets/me.webp";
 import { Github, LinkedIn } from "../components/SVG.jsx";
 
@@ -9,7 +8,7 @@ export const StaticAside = ({ language, HandleLanguage }) => {
         <img src={meImg} alt="Me IMG"></img>
         <h1>Sergio IA</h1>
         <h3>
-          {language === "ENGLISH"
+          {language === "EN"
             ? "Software Developer"
             : "Desarrollador de Software"}
         </h3>
@@ -23,19 +22,17 @@ export const StaticAside = ({ language, HandleLanguage }) => {
         </div>
         <ol>
           <li>
-            <a href="#">{language === "ENGLISH" ? "Home" : "Inicio"}</a>
+            <a href="#">{language === "EN" ? "Home" : "Inicio"}</a>
           </li>
           <li>
-            <a href="#">
-              {language === "ENGLISH" ? "Portfolio" : "Portafolio"}
-            </a>
+            <a href="#">{language === "EN" ? "Portfolio" : "Portafolio"}</a>
           </li>
           <li>
-            <a href="#">{language === "ENGLISH" ? "About me" : "Sobre mi"}</a>
+            <a href="#">{language === "EN" ? "About me" : "Sobre mi"}</a>
           </li>
         </ol>
         <button type="button" onClick={HandleLanguage}>
-          {language === "ENGLISH" ? "Español" : "English"}
+          {language === "EN" ? "Español" : "English"}
         </button>
         <select id="colorscheme" name="colorscheme">
           <option value="GRUVBOX_LIGHT">Gruvbox Light</option>

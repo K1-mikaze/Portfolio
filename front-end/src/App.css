@@ -35,3 +35,13 @@
   margin: 2rem;
   height: 50vh;
 }
+
+.Card .tag {
+  display: inline-block;
+  margin: 0 0.5rem;
+  padding: 0.3rem;
+  color: var(--text-clr);
+  list-style: none;
+  border: 2px solid var(--border-secondary-clr);
+  border-radius: 5px;
+}

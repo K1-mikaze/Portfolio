@@ -35,7 +35,7 @@ const useStorageState = (key, initialState) => {
 
 //Component
 function App() {
-  const url = "http://localhost:5678/blogs";
+  const url = `http://localhost:5678/blogs?lang=es`;
 
   const [blogs, dispatchBlogs] = React.useReducer(blogsReducer, {
     data: [],
@@ -64,13 +64,13 @@ function App() {
     handleFetchBlogs();
   }, [handleFetchBlogs]);
 
-  const [language, setLanguage] = useStorageState("language", "SPANISH");
+  const [language, setLanguage] = useStorageState("language", "ES");
 
   const handleLanguage = () => {
-    if (language === "ENGLISH") {
-      setLanguage("SPANISH");
+    if (language === "EN") {
+      setLanguage("ES");
     } else {
-      setLanguage("ENGLISH");
+      setLanguage("EN");
     }
   };
 
@@ -101,7 +101,11 @@ const Card = ({ Item }) => (
     <a href={Item.url}>
       <h1>{Item.title}</h1>
       <h2>{Item.description}</h2>
-      <p>{Item.created_at}</p>
+      <ul>
+        {Item.tags.map((tag) => (
+          <li className="tag">{tag.name}</li>
+        ))}
+      </ul>
     </a>
   </li>
 );
