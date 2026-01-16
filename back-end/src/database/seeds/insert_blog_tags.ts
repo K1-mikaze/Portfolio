@@ -30,6 +30,10 @@ export async function seed(knex: Knex): Promise<void> {
         image_path: "../image2",
         url: "www.hello.com",
       },
+      {
+        image_path: "../image2",
+        url: "www.hola2.com",
+      },
     ])
     .returning("id");
 
@@ -40,8 +44,12 @@ export async function seed(knex: Knex): Promise<void> {
   let blog_tags2 = tags.map((tag) => {
     return { tag_id: tag.id, blog_id: blogs[1].id };
   });
+
+  let blog_tag3 = { tag_id: tags[0].id, blog_id: blogs[2].id };
+
   await knex("blog_tags").insert(blog_tags);
   await knex("blog_tags").insert(blog_tags2);
+  await knex("blog_tags").insert(blog_tag3);
 
   let blogs_translations_es = {
     blog_id: blogs[0].id,
@@ -57,6 +65,14 @@ export async function seed(knex: Knex): Promise<void> {
     description: "Hello this a Test",
   };
 
+  let blogs_translations_es2 = {
+    blog_id: blogs[2].id,
+    language: "ES",
+    title: "Esta es otra prueba mas",
+    description: "Otras prueba masssssss",
+  };
+
   await knex("blog_translations").insert(blogs_translations_es);
   await knex("blog_translations").insert(blogs_translations_en);
+  await knex("blog_translations").insert(blogs_translations_es2);
 }

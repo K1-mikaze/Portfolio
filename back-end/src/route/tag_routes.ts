@@ -1,8 +1,8 @@
 import { Router } from "express";
 import * as TAGS from "../controller/tags_controller";
 
-const tagsRouter = Router({ mergeParams: true });
+const tagsRouter = Router();
 
-tagsRouter.get("/tags", TAGS.getTags);
+tagsRouter.get("/tags", TAGS.tags);
 
 export default tagsRouter;
