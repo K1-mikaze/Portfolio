@@ -23,15 +23,15 @@ export async function seed(knex: Knex): Promise<void> {
   const blogs = await knex("blogs")
     .insert([
       {
-        image_path: "../image",
+        image_path: "test1.webp",
         url: "www.google.com",
       },
       {
-        image_path: "../image2",
+        image_path: "test2.webp",
         url: "www.hello.com",
       },
       {
-        image_path: "../image2",
+        image_path: "test3.webp",
         url: "www.hola2.com",
       },
     ])
