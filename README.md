@@ -12,5 +12,5 @@ This project is still in Development and can be changed at any moment
 
 # To Do
 
-- When getting the blogs also get the updated_value from the database
+- When getting the blogs also get the tag's id and the blog's id from the database
 - When getting the blogs make sure to get the Tags using Uppercase in the first letter of the tag
