@@ -107,7 +107,7 @@ function Article({ blogs }) {
           <p>{Item.description}</p>
           <ul className="tags-container">
             {Item.tags.map((tag) => (
-              <li key={tag.name + tag.id} className="tag">
+              <li key={Item.id + tag.name + tag.id} className="tag">
                 {tag.name}
               </li>
             ))}
@@ -124,7 +124,7 @@ function Article({ blogs }) {
       ) : (
         <ul>
           {blogs.data.map((Item) => (
-            <Card Item={Item} />
+            <Card key={Item.id} Item={Item} />
           ))}
         </ul>
       )}
@@ -207,7 +207,7 @@ function SearchAside({ language, setUrl, API }) {
             <p>Loading ...</p>
           ) : (
             tags.data.map((tag) => (
-              <li id={tag.id + tag.name} className="tag">
+              <li key={tag.id + tag.name} className="tag">
                 <button type="button" value={tag.name} onClick={searchByTag}>
                   {tag.name}
                 </button>
