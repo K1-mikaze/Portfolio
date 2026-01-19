@@ -1,4 +1,5 @@
 import db from "../database/database";
+import { capitalizeFirstLetter } from "../util/string_manipulation";
 
 const getBlogsByLang = async (language: string) => {
   const response = await db("blogs")
@@ -13,10 +14,15 @@ const getBlogsByLang = async (language: string) => {
     .where("blog_translations.language", "=", language);
 
   const blogWithTags = await Promise.all(
-    response.map(async (row) => ({
-      ...row,
-      tags: await getTagsByBlogsId(row.id),
-    })),
+    response.map(async (row) => {
+      const searchTags = await getTagsByBlogsId(row.id);
+      searchTags.map((tag) => (tag.name = capitalizeFirstLetter(tag.name)));
+      return {
+        ...row,
+
+        tags: searchTags,
+      };
+    }),
   );
 
   return blogWithTags;
@@ -39,10 +45,15 @@ const getBlogsByLangAndMatch = async (language: string, match: string) => {
     );
 
   const blogWithTags = await Promise.all(
-    response.map(async (row) => ({
-      ...row,
-      tags: await getTagsByBlogsId(row.id),
-    })),
+    response.map(async (row) => {
+      const searchTags = await getTagsByBlogsId(row.id);
+      searchTags.map((tag) => (tag.name = capitalizeFirstLetter(tag.name)));
+      return {
+        ...row,
+
+        tags: searchTags,
+      };
+    }),
   );
   return blogWithTags;
 };
@@ -63,17 +74,22 @@ const getBlogsByLangAndTag = async (language: string, tag: string) => {
     .andWhere("tags.name", "=", tag);
 
   const blogWithTags = await Promise.all(
-    response.map(async (row) => ({
-      ...row,
-      tags: await getTagsByBlogsId(row.id),
-    })),
+    response.map(async (row) => {
+      const searchTags = await getTagsByBlogsId(row.id);
+      searchTags.map((tag) => (tag.name = capitalizeFirstLetter(tag.name)));
+      return {
+        ...row,
+
+        tags: searchTags,
+      };
+    }),
   );
   return blogWithTags;
 };
 
 const getTagsByBlogsId = async (id: number) => {
   return await db("blog_tags")
-    .select("tags.name")
+    .select("tags.name", "tags.id")
     .join("tags", "tags.id", "blog_tags.tag_id")
     .where("blog_tags.blog_id", "=", id);
 };
