@@ -1,3 +1,4 @@
 import HomePage from "./HomePage";
+import Portfolio from "./Portfolio";
 
-export { HomePage };
+export { HomePage, Portfolio };

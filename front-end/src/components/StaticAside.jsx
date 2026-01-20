@@ -1,5 +1,6 @@
 import meImg from "../assets/me.webp";
 import { GithubSVG, LinkedInSVG } from "../components/SVG.jsx";
+import "../style/StaticAside.css";
 
 function StaticAside({ language, handleLanguage, theme, handleTheme }) {
   const ES_text = {

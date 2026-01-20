@@ -81,22 +81,22 @@ function HomePage({
 
   return (
     <>
-      <div className={`grid-container ${theme}`}>
+      <article className={`grid-container ${theme}`}>
         <StaticAside
           language={language}
           handleLanguage={handleLanguage}
           handleTheme={handleTheme}
           theme={theme}
         />
-        <Article blogs={blogs} />
+        <MidleSection blogs={blogs} />
 
         <SearchAside language={language} setUrl={setUrl} API={API} />
-      </div>
+      </article>
     </>
   );
 }
 
-function Article({ blogs }) {
+function MidleSection({ blogs }) {
   const Card = ({ Item }) => {
     const image = `/images/${Item.image_path}`;
     return (
@@ -117,7 +117,7 @@ function Article({ blogs }) {
     );
   };
   return (
-    <article className="center-article">
+    <section className="center-article">
       {blogs.isError && <p>Something Went Wrong</p>}
       {blogs.isLoading ? (
         <p>Loading ...</p>
@@ -128,7 +128,7 @@ function Article({ blogs }) {
           ))}
         </ul>
       )}
-    </article>
+    </section>
   );
 }
 

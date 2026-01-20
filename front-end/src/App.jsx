@@ -1,6 +1,6 @@
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { HomePage } from "./pages/pagesBundle.jsx";
+import { HomePage, Portfolio } from "./pages/pagesBundle.jsx";
 import { useStorageState } from "./states/states.jsx";
 
 const API = ["http://localhost:5678/blogs?lang=", "http://localhost:5678/tags"];
@@ -42,7 +42,14 @@ function App() {
         />
         <Route
           path="/portfolio"
-          element={<h1>Welcome to Portfolio Page </h1>}
+          element={
+            <Portfolio
+              theme={theme}
+              handleTheme={handleTheme}
+              language={language}
+              handleLanguage={handleLanguage}
+            />
+          }
         />
 
         <Route path="/about" element={<h1>Welcome to About Page</h1>} />
