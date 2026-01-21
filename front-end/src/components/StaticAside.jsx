@@ -7,14 +7,14 @@ function StaticAside({ language, handleLanguage, theme, handleTheme }) {
     title: "Desarrollador de Software",
     home_url: "Inicio",
     portfolio_url: "Portafolio",
-    about_url: "Sobre mi",
+    contact_url: "Contacto",
     language_btn: "Español",
   };
   const EN_text = {
     title: "Software Developer",
     home_url: "Home",
     portfolio_url: "Portfolio",
-    about_url: "About me",
+    contact_url: "Contact",
     language_btn: "English",
   };
 
@@ -22,7 +22,7 @@ function StaticAside({ language, handleLanguage, theme, handleTheme }) {
     title,
     home_url,
     portfolio_url,
-    about_url,
+    contact_url,
     language_btn,
   }) => (
     <aside className="static-aside">
@@ -49,7 +49,7 @@ function StaticAside({ language, handleLanguage, theme, handleTheme }) {
             <a href="/portfolio">{portfolio_url}</a>
           </li>
           <li>
-            <a href="/about">{about_url}</a>
+            <a href="/portfolio#contact">{contact_url}</a>
           </li>
         </ol>
         <div className="button-controller">

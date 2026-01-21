@@ -51,8 +51,6 @@ function App() {
             />
           }
         />
-
-        <Route path="/about" element={<h1>Welcome to About Page</h1>} />
       </Routes>
     </BrowserRouter>
   );
