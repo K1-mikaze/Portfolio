@@ -1,0 +1,33 @@
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(180deg);
+  }
+
+  50% {
+    transform: rotate(180deg);
+  }
+
+  75% {
+    transform: rotate(360deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.loading {
+  display: flex;
+  justify-content: center;
+  svg {
+    justify-self: center;
+    align-self: center;
+    width: 70px;
+    height: 70px;
+    fill: var(--border-secondary-clr);
+    animation: spin 3s linear infinite;
+  }
+}

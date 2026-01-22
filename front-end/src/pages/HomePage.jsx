@@ -3,6 +3,7 @@ import "../style/HomePage.css";
 import StaticAside from "../components/StaticAside.jsx";
 import { TagSVG } from "../components/SVG.jsx";
 import { useStorageState } from "../states/states.jsx";
+import Loading from "../components/Loading.jsx";
 
 const homePageReducer = (state, action) => {
   switch (action.type) {
@@ -120,7 +121,7 @@ function MidleSection({ blogs }) {
     <section className="center-article">
       {blogs.isError && <p>Something Went Wrong</p>}
       {blogs.isLoading ? (
-        <p>Loading ...</p>
+        <Loading />
       ) : (
         <ul>
           {blogs.data.map((Item) => (
@@ -204,7 +205,7 @@ function SearchAside({ language, setUrl, API }) {
         <ul className="tags-container">
           {tags.isError && <p>Something Went Wrong</p>}
           {tags.isLoading ? (
-            <p>Loading ...</p>
+            <Loading />
           ) : (
             tags.data.map((tag) => (
               <li key={tag.id + tag.name} className="tag">

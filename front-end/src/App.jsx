@@ -8,7 +8,12 @@ const API = ["http://localhost:5678/blogs?lang=", "http://localhost:5678/tags"];
 function App() {
   const [language, setLanguage] = useStorageState("language", "ES");
   const [url, setUrl] = React.useState(`${API[0] + language}`);
-  const [theme, setTheme] = useStorageState("theme", "");
+  const [theme, setTheme] = useStorageState(
+    "theme",
+    window.matchMedia("(prefers-color-scheme: dark)").matches
+      ? "GRUVBOX_DARK"
+      : "",
+  );
 
   const handleTheme = () => {
     setTheme(event.target.value);
@@ -48,6 +53,7 @@ function App() {
               handleTheme={handleTheme}
               language={language}
               handleLanguage={handleLanguage}
+              url={API[0]}
             />
           }
         />
