@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useFetchData } from "../states/states";
 import StaticAside from "../components/StaticAside";
 import Loading from "../components/Loading";
 import "../style/Portfolio.css";
@@ -10,55 +11,45 @@ import {
   NixSVG,
   SpringSVG,
   FlutterSVG,
-  LinuxSVG,
   GitSVG,
   HtmlSVG,
   JavaSVG,
   DartSVG,
   CssSVG,
   ExpressSVG,
+  DebianSVG,
+  MintSVG,
+  UbuntuSVG,
+  CodeSVG,
 } from "../components/SVG";
 
-function Portfolio({ language, handleLanguage, theme, handleTheme, url }) {
-  const portfolioReducer = (state, action) => {
-    switch (action.type) {
-      case "BLOGS_FETCH_INIT":
-        return { ...state, isLoading: true, isError: false };
-
-      case "BLOGS_FETCH_SUCCESS":
-        return {
-          ...state,
-          isLoading: false,
-          isError: false,
-          data: action.payload,
-        };
-
-      case "BLOGS_FETCH_FAILURE":
-        return { ...state, isLoading: false, isError: true };
-
-      default:
-        throw new Error();
-    }
-  };
+function Portfolio({
+  language,
+  handleLanguage,
+  theme,
+  handleTheme,
+  blogs_url,
+  projects_url,
+}) {
   const ES_text = {
     introduction: {
       title: "Bienvenido a mi Portafolio",
-      slogan: "¿Qué vamos a construir hoy?", // Added accent on "Qué"
+      slogan: "¿Qué vamos a construir hoy?",
       intro:
         "Soy un Desarrollador de Software apasionado por la intersección entre el desarrollo de aplicaciones y los fundamentos de los sistemas operativos. Esta dualidad me permite crear software no solo funcional, sino también eficiente y consciente del sistema en el que se ejecuta. Aplico este mismo rigor para implementar arquitecturas limpias y código reproducible, explorando actualmente Nix para llevar estos conceptos al siguiente nivel. Con un dominio intermedio de Linux, busco retos donde pueda potenciar mis habilidades a un siguiente nivel.",
       btnProjects: "Ver mis Proyectos",
       btnContact: "Contacto",
-      suggestedArticles: "Artículos Recomendados", // Corrected "Articulos" to "Artículos"
-      btnBlog: "Leer Artículo", // Corrected "Articulo" to "Artículo"
+      suggestedArticles: "Artículos Recomendados",
+      btnBlog: "Leer Artículo",
     },
-    technologies: "Mis Habilidades", // Added accent on "Tecnologías"
+    technologies: "Mis Habilidades",
     projects: {
       title: "Proyectos",
       list: [
         {
           title: "Portafolio y Blog",
           description:
-            "Portafolio y Blog personal en el cual busco compartir mis proyectos, conocimiento y pensamientos adquiridos durante la resolución de problemas.", // Added accent to "resolución", changed "cual" to "el cual", "adquirido" to "adquiridos"
+            "Portafolio y Blog personal en el cual busco compartir mis proyectos, conocimiento y pensamientos adquiridos durante la resolución de problemas. Este proyecto incorpora multiples languajes y diferentes temas de colores.",
           technologies: [
             "React",
             "CSS",
@@ -80,6 +71,8 @@ function Portfolio({ language, handleLanguage, theme, handleTheme, url }) {
       nameLabel: "Nombre",
       messageLabel: "Mensaje",
       btnMessage: "Enviar Mensaje",
+      btnSubmitted: "Enviado ✔️",
+      slogan: "Vamos a construir un nuevo mundo",
     },
   };
 
@@ -101,7 +94,7 @@ function Portfolio({ language, handleLanguage, theme, handleTheme, url }) {
         {
           title: "Portfolio and Blog",
           description:
-            "A personal Portfolio and Blog where I share my projects, knowledge, and insights gained while solving problems.", // Corrected "Porfolio" to "Portfolio" and rewrote the sentence for clarity.
+            "A personal Portfolio and Blog where I share my projects, knowledge, and insights gained while solving problems. This project integrates multiple languajes and different color schemes.",
           technologies: [
             "React",
             "CSS",
@@ -123,12 +116,14 @@ function Portfolio({ language, handleLanguage, theme, handleTheme, url }) {
       nameLabel: "Name",
       messageLabel: "Message",
       btnMessage: "Send Message",
+      btnSubmitted: "Sent ✔️",
+      slogan: "Let's start building a new world",
     },
   };
-  const SectionArea = ({ text, url }) => {
-    const Introduction = ({ url, text }) => {
-      const FeaturedCarousel = ({ url, text }) => {
-        const [blogs, dispatchBlogs] = React.useReducer(portfolioReducer, {
+  const SectionArea = ({ text, blogs_url, projects_url }) => {
+    const Introduction = ({ blogs_url, text }) => {
+      const FeaturedCarousel = ({ blogs_url, text }) => {
+        const [blogs, dispatchBlogs] = React.useReducer(useFetchData, {
           data: [],
           isError: false,
           isLoading: false,
@@ -137,7 +132,7 @@ function Portfolio({ language, handleLanguage, theme, handleTheme, url }) {
         const handleFetchBlogs = React.useCallback(async () => {
           dispatchBlogs({ type: "BLOGS_FETCH_INIT" });
           try {
-            const response = await fetch(`${url}${language}`);
+            const response = await fetch(`${blogs_url}${language}`);
 
             if (!response) {
               throw new Error(`Error ${response.status}`);
@@ -154,7 +149,7 @@ function Portfolio({ language, handleLanguage, theme, handleTheme, url }) {
           } catch (error) {
             dispatchBlogs({ type: "BLOGS_FETCH_FAILURE" });
           }
-        }, [url]);
+        }, [blogs_url]);
 
         React.useEffect(() => {
           handleFetchBlogs();
@@ -257,7 +252,7 @@ function Portfolio({ language, handleLanguage, theme, handleTheme, url }) {
       };
       return (
         <section className="portfolio-section intro-section">
-          <div className="intro-content">
+          <section className="intro-content">
             <div className="intro-text">
               <h1>{text.title}</h1>
               <h2>{text.slogan}</h2>
@@ -271,8 +266,10 @@ function Portfolio({ language, handleLanguage, theme, handleTheme, url }) {
                 </a>
               </div>
             </div>
-            <FeaturedCarousel url={url} text={text} />
-          </div>
+          </section>
+          <section className="intro-carrousel">
+            <FeaturedCarousel blogs_url={blogs_url} text={text} />
+          </section>
         </section>
       );
     };
@@ -325,9 +322,24 @@ function Portfolio({ language, handleLanguage, theme, handleTheme, url }) {
         },
         { name: "Git", icon: <GitSVG />, link: "https://git-scm.com/" },
         {
-          name: "Linux",
-          icon: <LinuxSVG />,
-          link: "https://www.gnu.org/gnu/linux-and-gnu.en.html",
+          name: "NixOS",
+          icon: <NixSVG />,
+          link: "https://nixos.org/",
+        },
+        {
+          name: "Debian",
+          icon: <DebianSVG />,
+          link: "https://www.debian.org/",
+        },
+        {
+          name: "Ubuntu",
+          icon: <UbuntuSVG />,
+          link: "https://ubuntu.com/desktop",
+        },
+        {
+          name: "Linux Mint",
+          icon: <MintSVG />,
+          link: "https://linuxmint.com/",
         },
       ];
 
@@ -347,7 +359,7 @@ function Portfolio({ language, handleLanguage, theme, handleTheme, url }) {
         </section>
       );
     };
-    const Projects = ({ text }) => {
+    const Projects = ({ text, projects_url }) => {
       return (
         <section id="projects" className="portfolio-section projects-section">
           <h2>{text.title}</h2>
@@ -390,39 +402,169 @@ function Portfolio({ language, handleLanguage, theme, handleTheme, url }) {
         </section>
       );
     };
-    const Contact = ({ text }) => (
-      <section id="contact" className="portfolio-section contact-section">
-        <h2>{text.title}</h2>
-        <form
-          action="https://formsubmit.co/K1mikaze@proton.me"
-          method="POST"
-          className="contact-form"
-        >
-          <div className="form-group">
-            <label htmlFor="name">{text.nameLabel}</label>
-            <input type="text" id="name" name="name" required />
-          </div>
-          <div className="form-group">
-            <label htmlFor="email">Email</label>
-            <input type="email" id="email" name="email" required />
-          </div>
-          <div className="form-group">
-            <label htmlFor="message">{text.messageLabel}</label>
-            <textarea id="message" name="message" required></textarea>
-          </div>
-          <button type="submit" className="btn-primary">
-            {text.btnMessage}
-          </button>
-        </form>
-      </section>
-    );
+
+    const Contact = ({ text }) => {
+      const [contactData, setContactData] = React.useState({
+        name: { info: "", error: false },
+        email: { info: "", error: false },
+        message: { info: "", error: false },
+      });
+
+      const handleContactChange = (event) => {
+        const { name, value } = event.target;
+        setContactData((prev) => ({
+          ...prev,
+          [name]: { info: value, error: false },
+        }));
+      };
+
+      const handleContactSubmit = async (event) => {
+        event.preventDefault();
+        const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+        let name = false,
+          message = false,
+          email = false;
+
+        if (contactData.name.info.trim() === "") {
+          name = true;
+        }
+
+        if (
+          contactData.email.info.trim() === "" ||
+          !emailRegex.test(contactData.email.info)
+        ) {
+          email = true;
+        }
+
+        if (contactData.message.info.trim() === "") {
+          message = true;
+        }
+
+        if (name || email || message) {
+          setContactData({
+            name: { info: name ? "" : contactData.name.info, error: name },
+            email: { info: email ? "" : contactData.email.info, error: email },
+            message: {
+              info: message ? "" : contactData.message.info,
+              error: message,
+            },
+          });
+          return;
+        }
+
+        try {
+          // Format data as URL encoded form data
+          const formData = new FormData();
+          formData.append("email", contactData.email.info);
+          formData.append("name", contactData.name.info);
+          formData.append("message", contactData.message.info);
+
+          formData.append("_subject", "New Contact Form Submission");
+          formData.append("_captcha", "false");
+
+          const response = await fetch(
+            "https://formsubmit.co/K1mikaze@proton.me",
+            {
+              method: "POST",
+              body: formData,
+            },
+          );
+
+          if (response.ok) {
+            setContactData({
+              name: { info: "", error: false },
+              email: { info: "", error: false },
+              message: { info: "", error: false },
+            });
+            setIsSubmitted(true);
+          } else {
+            console.error("Form submission failed:", response.status);
+          }
+        } catch (error) {
+          console.error("Error submitting form:", error);
+        }
+      };
+
+      const [isSubmitted, setIsSubmitted] = useState(false);
+
+      return (
+        <section id="contact" className="portfolio-section contact-section">
+          <section className="form-container">
+            <h2>{text.title}</h2>
+
+            <form onSubmit={handleContactSubmit} className="contact-form">
+              <div className="form-group">
+                <label htmlFor="name">
+                  {text.nameLabel + (contactData.name.error ? " ⚠️" : "")}
+                </label>
+                <input
+                  className={contactData.name.error ? "error" : ""}
+                  type="text"
+                  id="name"
+                  value={contactData.name.info}
+                  name="name"
+                  autoComplete="Your full name"
+                  onChange={handleContactChange}
+                  maxLength={200}
+                  minLength={3}
+                  required
+                />
+              </div>
+              <div className="form-group">
+                <label htmlFor="email">
+                  Email {contactData.email.error ? " ⚠️" : ""}
+                </label>
+                <input
+                  className={contactData.email.error ? "error" : ""}
+                  type="text"
+                  id="email"
+                  value={contactData.email.info}
+                  name="email"
+                  autoComplete="Email addres"
+                  minLength={10}
+                  maxLength={320}
+                  onChange={handleContactChange}
+                  required
+                />
+              </div>
+              <div className="form-group">
+                <label htmlFor="message">
+                  {text.messageLabel + (contactData.message.error ? " ⚠️" : "")}
+                </label>
+                <textarea
+                  className={contactData.message.error ? "error" : ""}
+                  id="message"
+                  name="message"
+                  onChange={handleContactChange}
+                  value={contactData.message.info}
+                  minLength={10}
+                  maxLength={1000}
+                  required
+                ></textarea>
+              </div>
+              <button
+                type="submit"
+                className="btn-primary"
+                disabled={isSubmitted}
+              >
+                {isSubmitted == true ? text.btnSubmitted : text.btnMessage}
+              </button>
+            </form>
+          </section>
+          <section className="contact-slogan">
+            <h1>{text.slogan}</h1>
+            <CodeSVG />
+          </section>
+        </section>
+      );
+    };
 
     return (
       <section className="section-area">
         <div className="section-container">
-          <Introduction url={url} text={text.introduction} />
+          <Introduction blogs_url={blogs_url} text={text.introduction} />
           <Technologies text={text.technologies} />
-          <Projects text={text.projects} />
+          <Projects text={text.projects} projects_url={projects_url} />
           <Contact text={text.contact} />
         </div>
       </section>
@@ -437,7 +579,11 @@ function Portfolio({ language, handleLanguage, theme, handleTheme, url }) {
         theme={theme}
         handleTheme={handleTheme}
       />
-      <SectionArea text={language === "ES" ? ES_text : EN_text} url={url} />
+      <SectionArea
+        text={language === "ES" ? ES_text : EN_text}
+        blogs_url={blogs_url}
+        projects_url={projects_url}
+      />
     </article>
   );
 }

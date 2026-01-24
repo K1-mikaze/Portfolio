@@ -10,6 +10,11 @@
 .center-article {
   grid-area: "center";
 }
+.no-elements {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
 article ul {
   margin: 0;

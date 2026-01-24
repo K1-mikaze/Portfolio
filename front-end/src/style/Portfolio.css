@@ -43,14 +43,17 @@
 
 .intro-section {
   padding: 4rem;
-  padding-top: 1rem;
+  padding-top: 0;
   display: flex;
   justify-content: space-between;
+  flex-wrap: wrap;
 }
 
 .intro-content {
   display: flex;
   align-items: center;
+  justify-content: center;
+
   .intro-text {
     flex: 1;
     h2 {
@@ -106,151 +109,164 @@
 .btn-primary:active {
   transform: translateY(0);
 }
-.featured-carousel {
-  width: 400px;
-  flex-shrink: 0;
-  margin-left: 5rem;
+.btn-primary:disabled {
+  transform: translateY(0);
+  opacity: 50%;
+}
 
-  h2 {
-    font-size: 1.5rem;
-    margin-left: 2rem;
-    margin-top: 6rem;
-    overflow-x: hidden;
-  }
-  .carousel-container {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    position: relative;
-  }
+.btn-primary:disabled:hover {
+  background-color: var(--border-clr);
+}
 
-  .carousel-nav {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    background-color: var(--border-clr);
-    color: var(--base-clr);
-    border: none;
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    cursor: pointer;
-    z-index: 2;
-    transition: all 0.3s ease;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.2rem;
-  }
-
-  .carousel-nav:hover {
-    background-color: var(--border-secondary-clr);
-    transform: translateY(-50%) scale(1.1);
-  }
-
-  .carousel-nav-prev {
-    left: -20px;
-  }
-
-  .carousel-nav-next {
-    right: -20px;
-  }
-
-  .carousel-track {
-    display: flex;
-    justify-content: center;
-    width: 400px;
-    height: 400px;
-    position: relative;
-  }
-
-  .carousel-card {
-    position: absolute;
-    max-width: 400px;
-    height: 400px;
-    background-color: var(--base-secondary-clr);
-    padding: 1.5rem;
-    border: 2px solid var(--border-clr);
-    border-radius: 0.3rem;
+.intro-carrousel {
+  width: 40%;
+  display: flex;
+  justify-content: center;
+  .featured-carousel {
     display: flex;
     flex-direction: column;
-    transition: all 0.5s ease;
-    cursor: pointer;
-    img {
-      height: 50%;
-      width: 100%;
-      border-radius: 0.3rem;
+    width: 400px;
+    text-align: center;
+
+    h2 {
+      font-size: 1.5rem;
+      margin-top: 6rem;
+      overflow-x: hidden;
+    }
+    .carousel-container {
+      position: relative;
     }
 
-    .carousel-card-title {
-      font-size: 1.2rem;
-      color: var(--border-clr);
-      margin-bottom: 0.75rem;
-    }
-
-    .carousel-card-description {
-      font-size: 0.9rem;
-      color: var(--text-secondary-clr);
-      line-height: 1.5;
-      margin-bottom: 1rem;
-      flex-grow: 1;
-    }
-
-    .carousel-card-technologies {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.5rem;
-      margin-bottom: 1rem;
-    }
-
-    .carousel-tech-tag {
-      padding: 0.25rem 0.5rem;
-      background-color: var(--base-clr);
-      border: 1px solid var(--border-clr);
-      border-radius: 0.3rem;
-      font-size: 0.75rem;
-      color: var(--text-clr);
-    }
-
-    .carousel-card-link {
-      padding: 0.5rem 1rem;
+    .carousel-nav {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
       background-color: var(--border-clr);
       color: var(--base-clr);
-      text-decoration: none;
-      border-radius: 0.3rem;
-      text-align: center;
-      transition: background-color 0.3s ease;
-      font-size: 0.9rem;
+      border: none;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      cursor: pointer;
+      z-index: 2;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
     }
 
-    .carousel-card-link:hover {
+    .carousel-nav:hover {
       background-color: var(--border-secondary-clr);
+      transform: translateY(-50%) scale(1.1);
     }
-  }
 
-  .carousel-dots {
-    display: flex;
-    justify-content: center;
-    gap: 0.5rem;
-    margin-top: 5rem;
-  }
+    .carousel-nav-prev {
+      left: -20px;
+    }
 
-  .carousel-dot {
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    border: 2px solid var(--border-clr);
-    background-color: transparent;
-    cursor: pointer;
-    transition: all 0.3s ease;
-  }
+    .carousel-nav-next {
+      right: -20px;
+    }
 
-  .carousel-dot.active {
-    background-color: var(--border-clr);
-  }
+    .carousel-track {
+      display: flex;
+      justify-content: center;
+      width: 100%;
+      height: 400px;
+      position: relative;
+    }
 
-  .carousel-dot:hover {
-    border-color: var(--border-secondary-clr);
+    .carousel-card {
+      position: absolute;
+      max-width: 100%;
+      height: 400px;
+      text-align: start;
+      background-color: var(--base-secondary-clr);
+      padding: 1rem;
+      border: 2px solid var(--border-clr);
+      border-radius: 0.3rem;
+      display: flex;
+      flex-direction: column;
+      transition: all 0.5s ease;
+      cursor: pointer;
+      img {
+        height: 50%;
+        width: 100%;
+        border-radius: 0.3rem;
+      }
+
+      .carousel-card-title {
+        font-size: 1.2rem;
+        color: var(--border-clr);
+        margin-top: 0.5rem;
+        margin-bottom: 0.75rem;
+      }
+
+      .carousel-card-description {
+        font-size: 0.9rem;
+        color: var(--text-secondary-clr);
+        line-height: 1.5;
+        margin-bottom: 1rem;
+        flex-grow: 1;
+      }
+
+      .carousel-card-technologies {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        margin-bottom: 0.5rem;
+      }
+
+      .carousel-tech-tag {
+        padding: 0.25rem 0.5rem;
+        background-color: var(--base-clr);
+        border: 1px solid var(--border-clr);
+        border-radius: 0.3rem;
+        font-size: 0.75rem;
+        color: var(--text-clr);
+      }
+
+      .carousel-card-link {
+        padding: 0.5rem 1rem;
+        background-color: var(--border-clr);
+        color: var(--base-clr);
+        text-decoration: none;
+        border-radius: 0.3rem;
+        text-align: center;
+        transition: background-color 0.3s ease;
+        font-size: 0.9rem;
+      }
+
+      .carousel-card-link:hover {
+        background-color: var(--border-secondary-clr);
+      }
+    }
+
+    .carousel-dots {
+      display: flex;
+      justify-content: center;
+      gap: 0.5rem;
+      margin-top: 5rem;
+    }
+
+    .carousel-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      border: 2px solid var(--border-clr);
+      background-color: transparent;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .carousel-dot.active {
+      background-color: var(--border-clr);
+    }
+
+    .carousel-dot:hover {
+      border-color: var(--border-secondary-clr);
+    }
   }
 }
 
@@ -373,43 +389,75 @@
   }
 }
 
-.contact-form {
-  max-width: 600px;
+.contact-section {
   display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
+  padding: 4rem;
+  padding-top: 2rem;
+  justify-content: space-between;
 
-  .form-group {
+  .form-container {
+    width: 50%;
+    .contact-form {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+
+      .form-group {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+
+        label {
+          font-weight: 600;
+          color: var(--text-secondary-clr);
+        }
+
+        input,
+        textarea {
+          width: 80%;
+          padding: 0.75rem;
+          border: 2px solid var(--border-clr);
+          border-radius: 0.3rem;
+          background-color: var(--base-clr);
+          color: var(--text-clr);
+          font-size: 1rem;
+          font-family: inherit;
+          transition: border-color 0.3s ease;
+        }
+
+        input:focus,
+        textarea:focus {
+          outline: none;
+          border-color: var(--border-secondary-clr);
+        }
+
+        .error {
+          border-color: red;
+        }
+
+        textarea {
+          min-height: 150px;
+          resize: vertical;
+        }
+      }
+      .btn-primary {
+        width: 85%;
+      }
+    }
+  }
+
+  .contact-slogan {
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
+    width: 50%;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    gap: 3rem;
 
-    label {
-      font-weight: 600;
-      color: var(--text-secondary-clr);
-    }
-
-    input,
-    textarea {
-      padding: 0.75rem;
-      border: 2px solid var(--border-clr);
-      border-radius: 0.3rem;
-      background-color: var(--base-clr);
-      color: var(--text-clr);
-      font-size: 1rem;
-      font-family: inherit;
-      transition: border-color 0.3s ease;
-    }
-
-    input:focus,
-    textarea:focus {
-      outline: none;
-      border-color: var(--border-secondary-clr);
-    }
-
-    textarea {
-      min-height: 150px;
-      resize: vertical;
+    svg {
+      width: 200px;
+      height: 200px;
     }
   }
 }
@@ -429,6 +477,7 @@
   }
 
   .intro-content {
+    margin-top: 1rem;
     flex-direction: column;
     gap: 2rem;
   }
@@ -437,14 +486,29 @@
     width: 100%;
   }
 
-  .featured-carousel {
-    width: auto;
-    margin-top: 1rem;
-    margin-left: 0;
-    margin-right: 0;
+  .intro-carrousel {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    .featured-carousel {
+      width: auto;
+      margin-left: 0;
+      margin-right: 0;
 
-    .portfolio-section {
-      padding: 2rem 2rem;
+      .portfolio-section {
+        padding: 2rem 2rem;
+      }
+    }
+  }
+
+  .contact-section {
+    justify-content: center;
+    padding: 4rem;
+    .form-container {
+      width: 100%;
+    }
+    .contact-slogan {
+      display: none;
     }
   }
 }
@@ -485,36 +549,41 @@
     grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
   }
 
-  .featured-carousel {
-    max-width: 300px;
-    margin-top: 1rem;
-    margin-left: 0;
+  .intro-carrousel {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    .featured-carousel {
+      max-width: 250px;
+      margin-top: 1rem;
+      margin-left: 0;
 
-    .carousel-nav {
-      width: 35px;
-      height: 35px;
-      font-size: 1rem;
-    }
+      .carousel-nav {
+        width: 35px;
+        height: 35px;
+        font-size: 1rem;
+      }
 
-    .carousel-nav-prev {
-      left: -10px;
-    }
+      .carousel-nav-prev {
+        left: -10px;
+      }
 
-    .carousel-nav-next {
-      right: -10px;
-    }
+      .carousel-nav-next {
+        right: -10px;
+      }
 
-    .carousel-card {
-      padding: 1rem;
-      width: 230px;
-    }
+      .carousel-card {
+        padding: 1rem;
+        width: 230px;
+      }
 
-    .carousel-card-title {
-      font-size: 1rem;
-    }
+      .carousel-card-title {
+        font-size: 1rem;
+      }
 
-    .carousel-card-description {
-      font-size: 0.8rem;
+      .carousel-card-description {
+        font-size: 0.8rem;
+      }
     }
   }
 }

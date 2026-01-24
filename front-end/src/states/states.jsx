@@ -1,5 +1,6 @@
 import React from "react";
 
+// use the localStorage to store a value and got it in new sessions
 const useStorageState = (key, initialState) => {
   const [value, setValue] = React.useState(
     localStorage.getItem(key) || initialState,
@@ -11,4 +12,40 @@ const useStorageState = (key, initialState) => {
   return [value, setValue];
 };
 
-export { useStorageState };
+// Fetch blogs and tags from the API
+const useFetchData = (state, action) => {
+  switch (action.type) {
+    case "BLOGS_FETCH_INIT":
+      return { ...state, isLoading: true, isError: false };
+
+    case "TAGS_FETCH_INIT":
+      return { ...state, isLoading: true, isError: false };
+
+    case "BLOGS_FETCH_SUCCESS":
+      return {
+        ...state,
+        isLoading: false,
+        isError: false,
+        data: action.payload,
+      };
+
+    case "TAGS_FETCH_SUCCESS":
+      return {
+        ...state,
+        isLoading: false,
+        isError: false,
+        data: action.payload,
+      };
+
+    case "BLOGS_FETCH_FAILURE":
+      return { ...state, isLoading: false, isError: true };
+
+    case "TAGS_FETCH_FAILURE":
+      return { ...state, isLoading: false, isError: true };
+
+    default:
+      throw new Error();
+  }
+};
+
+export { useStorageState, useFetchData };

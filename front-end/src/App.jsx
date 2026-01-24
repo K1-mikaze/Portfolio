@@ -3,11 +3,19 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { HomePage, Portfolio } from "./pages/pagesBundle.jsx";
 import { useStorageState } from "./states/states.jsx";
 
-const API = ["http://localhost:5678/blogs?lang=", "http://localhost:5678/tags"];
+const API = {
+  blogs: "http://localhost:5678/blogs?lang=",
+  tags: "http://localhost:5678/tags",
+};
 
 function App() {
-  const [language, setLanguage] = useStorageState("language", "ES");
-  const [url, setUrl] = React.useState(`${API[0] + language}`);
+  const userLanguage = navigator.language.substring(0, 2).toUpperCase();
+
+  const [language, setLanguage] = useStorageState(
+    "language",
+    userLanguage === "EN" ? "EN" : "ES",
+  );
+  const [url, setUrl] = React.useState(`${API.blogs + language}`);
   const [theme, setTheme] = useStorageState(
     "theme",
     window.matchMedia("(prefers-color-scheme: dark)").matches
@@ -22,10 +30,10 @@ function App() {
   const handleLanguage = () => {
     if (language === "EN") {
       setLanguage("ES");
-      setUrl(`${API[0]}ES`);
+      setUrl(`${API.blogs}ES`);
     } else {
       setLanguage("EN");
-      setUrl(`${API[0]}EN`);
+      setUrl(`${API.blogs}EN`);
     }
   };
   return (
@@ -41,7 +49,8 @@ function App() {
               handleTheme={handleTheme}
               url={url}
               setUrl={setUrl}
-              API={API}
+              tags_url={API.tags}
+              blogs_url={API.blogs}
             />
           }
         />
@@ -53,7 +62,7 @@ function App() {
               handleTheme={handleTheme}
               language={language}
               handleLanguage={handleLanguage}
-              url={API[0]}
+              blogs_url={API.blogs}
             />
           }
         />

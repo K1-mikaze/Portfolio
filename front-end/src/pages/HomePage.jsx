@@ -2,43 +2,8 @@ import React from "react";
 import "../style/HomePage.css";
 import StaticAside from "../components/StaticAside.jsx";
 import { TagSVG } from "../components/SVG.jsx";
-import { useStorageState } from "../states/states.jsx";
+import { useStorageState, useFetchData } from "../states/states.jsx";
 import Loading from "../components/Loading.jsx";
-
-const homePageReducer = (state, action) => {
-  switch (action.type) {
-    case "BLOGS_FETCH_INIT":
-      return { ...state, isLoading: true, isError: false };
-
-    case "TAGS_FETCH_INIT":
-      return { ...state, isLoading: true, isError: false };
-
-    case "BLOGS_FETCH_SUCCESS":
-      return {
-        ...state,
-        isLoading: false,
-        isError: false,
-        data: action.payload,
-      };
-
-    case "TAGS_FETCH_SUCCESS":
-      return {
-        ...state,
-        isLoading: false,
-        isError: false,
-        data: action.payload,
-      };
-
-    case "BLOGS_FETCH_FAILURE":
-      return { ...state, isLoading: false, isError: true };
-
-    case "TAGS_FETCH_FAILURE":
-      return { ...state, isLoading: false, isError: true };
-
-    default:
-      throw new Error();
-  }
-};
 
 function HomePage({
   language,
@@ -47,9 +12,10 @@ function HomePage({
   handleTheme,
   url,
   setUrl,
-  API,
+  tags_url,
+  blogs_url,
 }) {
-  const [blogs, dispatchBlogs] = React.useReducer(homePageReducer, {
+  const [blogs, dispatchBlogs] = React.useReducer(useFetchData, {
     data: [],
     isError: false,
     isLoading: false,
@@ -91,7 +57,12 @@ function HomePage({
         />
         <MidleSection blogs={blogs} />
 
-        <SearchAside language={language} setUrl={setUrl} API={API} />
+        <SearchAside
+          language={language}
+          setUrl={setUrl}
+          tags_url={tags_url}
+          blogs_url={blogs_url}
+        />
       </article>
     </>
   );
@@ -118,22 +89,28 @@ function MidleSection({ blogs }) {
     );
   };
   return (
-    <section className="center-article">
+    <section
+      className={
+        blogs.data.length > 0 ? "center-article" : "center-article no-elements"
+      }
+    >
       {blogs.isError && <p>Something Went Wrong</p>}
       {blogs.isLoading ? (
         <Loading />
       ) : (
         <ul>
-          {blogs.data.map((Item) => (
-            <Card key={Item.id} Item={Item} />
-          ))}
+          {blogs.data.length > 0 ? (
+            blogs.data.map((Item) => <Card key={Item.id} Item={Item} />)
+          ) : (
+            <h1>Not Content Found</h1>
+          )}
         </ul>
       )}
     </section>
   );
 }
 
-function SearchAside({ language, setUrl, API }) {
+function SearchAside({ language, setUrl, tags_url, blogs_url }) {
   const [searchTerm, setSearchTerm] = useStorageState("search", "");
 
   const handleSearchInput = (event) => {
@@ -141,14 +118,14 @@ function SearchAside({ language, setUrl, API }) {
   };
 
   const searchAction = () => {
-    setUrl(`${API[0]}${language}&match=${searchTerm}`);
+    setUrl(`${blogs_url}${language}&match=${searchTerm}`);
   };
 
   const searchByTag = () => {
-    setUrl(`${API[0]}${language}&tag=${event.target.value}`);
+    setUrl(`${blogs_url}${language}&tag=${event.target.value}`);
   };
 
-  const [tags, dispatchTags] = React.useReducer(homePageReducer, {
+  const [tags, dispatchTags] = React.useReducer(useFetchData, {
     data: [],
     isError: false,
     isLoading: false,
@@ -157,7 +134,7 @@ function SearchAside({ language, setUrl, API }) {
   const handleFetchTags = React.useCallback(async () => {
     dispatchTags({ type: "TAGS_FETCH_INIT" });
     try {
-      const response = await fetch(API[1]);
+      const response = await fetch(tags_url);
 
       if (!response) {
         throw new Error(`Error ${response.status}`);
@@ -173,7 +150,7 @@ function SearchAside({ language, setUrl, API }) {
     } catch (error) {
       dispatchTags({ type: "TAGS_FETCH_FAILURE" });
     }
-  }, [API[1]]);
+  }, [tags_url]);
 
   React.useEffect(() => {
     handleFetchTags();
