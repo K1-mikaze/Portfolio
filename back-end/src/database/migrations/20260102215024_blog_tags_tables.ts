@@ -20,7 +20,7 @@ export async function up(knex: Knex): Promise<void> {
 
   await knex.schema.createTable("tags", (table) => {
     table.increments("id").primary();
-    table.string("name", 50).notNullable();
+    table.string("name", 50).notNullable().unique();
   });
 
   await knex.schema.createTable("blog_tags", (table) => {
