@@ -71,6 +71,7 @@
     margin-top: 1rem;
     margin-bottom: 1rem;
     height: 40px;
+    width: 150px;
   }
 
   button:hover {
@@ -80,9 +81,12 @@
     color: var(--text-clr);
     background-color: var(--base-secondary-clr);
     border: var(--border-secondary-clr) 2px solid;
-    padding: 0.5rem 0;
+    padding: 0.5rem;
     border-radius: 5px;
     height: 40px;
+    width: 150px;
+    display: flex;
+    text-align: center;
   }
   select:hover {
     background-color: var(--hover-clr);
@@ -170,12 +174,13 @@
   }
 
   .static-aside button {
-    padding: 0.4rem 2rem;
+    padding: 0.5rem 2rem;
+
     font-size: 0.9rem;
   }
 
   .static-aside select {
-    padding: 0.4rem 0;
+    padding: 0.5rem;
     font-size: 0.9rem;
   }
 }

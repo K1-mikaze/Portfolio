@@ -45,24 +45,6 @@ function Portfolio({
     technologies: "Mis Habilidades",
     projects: {
       title: "Proyectos",
-      list: [
-        {
-          title: "Portafolio y Blog",
-          description:
-            "Portafolio y Blog personal en el cual busco compartir mis proyectos, conocimiento y pensamientos adquiridos durante la resolución de problemas. Este proyecto incorpora multiples languajes y diferentes temas de colores.",
-          technologies: [
-            "React",
-            "CSS",
-            "HTML",
-            "Express",
-            "Typescript",
-            "JavaScript",
-            "Nix",
-          ],
-          repoUrl: "https://github.com/K1-mikaze/portfolio",
-          website: "test",
-        },
-      ],
       btnWebsite: "Ver el Sitio",
       btnRepo: "Ver el Repositorio",
     },
@@ -90,24 +72,6 @@ function Portfolio({
     technologies: "My Skills",
     projects: {
       title: "Projects",
-      list: [
-        {
-          title: "Portfolio and Blog",
-          description:
-            "A personal Portfolio and Blog where I share my projects, knowledge, and insights gained while solving problems. This project integrates multiple languajes and different color schemes.",
-          technologies: [
-            "React",
-            "CSS",
-            "HTML",
-            "Express",
-            "Typescript",
-            "JavaScript",
-            "Nix",
-          ],
-          repoUrl: "https://github.com/K1-mikaze/portfolio",
-          website: "test",
-        },
-      ],
       btnWebsite: "View Website",
       btnRepo: "View Repository",
     },
@@ -130,9 +94,9 @@ function Portfolio({
         });
 
         const handleFetchBlogs = React.useCallback(async () => {
-          dispatchBlogs({ type: "BLOGS_FETCH_INIT" });
+          dispatchBlogs({ type: "FETCH_INIT" });
           try {
-            const response = await fetch(`${blogs_url}${language}`);
+            const response = await fetch(`${blogs_url}${language}&quantity=3`);
 
             if (!response) {
               throw new Error(`Error ${response.status}`);
@@ -141,13 +105,13 @@ function Portfolio({
             const data = await response.json();
 
             dispatchBlogs({
-              type: "BLOGS_FETCH_SUCCESS",
+              type: "FETCH_SUCCESS",
               payload: data,
               isLoading: false,
               isError: false,
             });
           } catch (error) {
-            dispatchBlogs({ type: "BLOGS_FETCH_FAILURE" });
+            dispatchBlogs({ type: "FETCH_FAILURE" });
           }
         }, [blogs_url]);
 
@@ -360,45 +324,83 @@ function Portfolio({
       );
     };
     const Projects = ({ text, projects_url }) => {
+      const [projects, dispatchProjects] = React.useReducer(useFetchData, {
+        data: [],
+        isError: false,
+        isLoading: false,
+      });
+
+      const handleFetchProjects = React.useCallback(async () => {
+        dispatchProjects({ type: "FETCH_INIT" });
+        try {
+          const response = await fetch(`${blogs_url}${language}`);
+
+          if (!response) {
+            throw new Error(`Error ${response.status}`);
+          }
+
+          const data = await response.json();
+
+          dispatchProjects({
+            type: "FETCH_SUCCESS",
+            payload: data,
+            isLoading: false,
+            isError: false,
+          });
+        } catch (error) {
+          dispatchProjects({ type: "FETCH_FAILURE" });
+        }
+      }, [projects_url]);
+
+      React.useEffect(() => {
+        handleFetchProjects();
+      }, [handleFetchProjects]);
+
       return (
         <section id="projects" className="portfolio-section projects-section">
           <h2>{text.title}</h2>
-          <div className="projects-grid">
-            {text.list.map((project, index) => (
-              <div key={index} className="project-card">
-                <h3>{project.title}</h3>
-                <p>{project.description}</p>
-                <div className="project-technologies">
-                  {project.technologies.map((tech, i) => (
-                    <span key={i} className="project-tech-tag">
-                      {tech}
-                    </span>
-                  ))}
-                </div>
-                <div className="project-buttons">
-                  <a
-                    href={project.repoUrl}
-                    target="_blank"
-                    className="project-link"
-                  >
-                    {text.btnRepo}
-                  </a>
 
-                  {project.website !== null ? (
+          {projects.isError && <p>Something Went Wrong</p>}
+          {projects.isLoading ? (
+            <Loading />
+          ) : (
+            <div className="projects-grid">
+              {projects.data.map((project) => (
+                <div key={project.id} className="project-card">
+                  <h3>{project.title}</h3>
+                  <p>{project.description}</p>
+                  <div className="project-technologies">
+                    {project.tags.slice(0, 3).map((tech) => (
+                      <span key={tech.id} className="project-tech-tag">
+                        {tech.name}
+                      </span>
+                    ))}
+                  </div>
+                  <div className="project-buttons">
                     <a
-                      href={project.website}
+                      href={project.repository}
                       target="_blank"
                       className="project-link"
                     >
-                      {text.btnWebsite}
+                      {text.btnRepo}
                     </a>
-                  ) : (
-                    ""
-                  )}
+
+                    {project.website !== null ? (
+                      <a
+                        href={project.website}
+                        target="_blank"
+                        className="project-link"
+                      >
+                        {text.btnWebsite}
+                      </a>
+                    ) : (
+                      ""
+                    )}
+                  </div>
                 </div>
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
+          )}
         </section>
       );
     };

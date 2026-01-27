@@ -22,7 +22,7 @@ function HomePage({
   });
 
   const handleFetchBlogs = React.useCallback(async () => {
-    dispatchBlogs({ type: "BLOGS_FETCH_INIT" });
+    dispatchBlogs({ type: "FETCH_INIT" });
     try {
       const response = await fetch(url);
 
@@ -33,12 +33,12 @@ function HomePage({
       const data = await response.json();
 
       dispatchBlogs({
-        type: "BLOGS_FETCH_SUCCESS",
+        type: "FETCH_SUCCESS",
         payload: data,
-        isLoading: true,
+        isLoading: false,
       });
     } catch (error) {
-      dispatchBlogs({ type: "BLOGS_FETCH_FAILURE" });
+      dispatchBlogs({ type: "FETCH_FAILURE" });
     }
   }, [url]);
 
@@ -132,7 +132,7 @@ function SearchAside({ language, setUrl, tags_url, blogs_url }) {
   });
 
   const handleFetchTags = React.useCallback(async () => {
-    dispatchTags({ type: "TAGS_FETCH_INIT" });
+    dispatchTags({ type: "FETCH_INIT" });
     try {
       const response = await fetch(tags_url);
 
@@ -143,12 +143,12 @@ function SearchAside({ language, setUrl, tags_url, blogs_url }) {
       const data = await response.json();
 
       dispatchTags({
-        type: "TAGS_FETCH_SUCCESS",
+        type: "FETCH_SUCCESS",
         payload: data,
         isLoading: true,
       });
     } catch (error) {
-      dispatchTags({ type: "TAGS_FETCH_FAILURE" });
+      dispatchTags({ type: "FETCH_FAILURE" });
     }
   }, [tags_url]);
 

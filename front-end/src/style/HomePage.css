@@ -215,6 +215,7 @@ input {
     height: 45vh;
     margin: 2rem;
     margin-top: 1rem;
+    overflow-y: scroll;
   }
 
   .right-aside {

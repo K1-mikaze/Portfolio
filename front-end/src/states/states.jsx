@@ -15,13 +15,10 @@ const useStorageState = (key, initialState) => {
 // Fetch blogs and tags from the API
 const useFetchData = (state, action) => {
   switch (action.type) {
-    case "BLOGS_FETCH_INIT":
+    case "FETCH_INIT":
       return { ...state, isLoading: true, isError: false };
 
-    case "TAGS_FETCH_INIT":
-      return { ...state, isLoading: true, isError: false };
-
-    case "BLOGS_FETCH_SUCCESS":
+    case "FETCH_SUCCESS":
       return {
         ...state,
         isLoading: false,
@@ -29,18 +26,7 @@ const useFetchData = (state, action) => {
         data: action.payload,
       };
 
-    case "TAGS_FETCH_SUCCESS":
-      return {
-        ...state,
-        isLoading: false,
-        isError: false,
-        data: action.payload,
-      };
-
-    case "BLOGS_FETCH_FAILURE":
-      return { ...state, isLoading: false, isError: true };
-
-    case "TAGS_FETCH_FAILURE":
+    case "FETCH_FAILURE":
       return { ...state, isLoading: false, isError: true };
 
     default:

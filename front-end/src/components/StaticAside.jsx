@@ -62,10 +62,10 @@ function StaticAside({ language, handleLanguage, theme, handleTheme }) {
             value={theme}
             onChange={handleTheme}
           >
-            <option value="">Gruvbox Light</option>
-            <option value="CATPPUCCIN_LATTE">Catppuccin Latte</option>
-            <option value="GRUVBOX_DARK"> Gruvbox Dark</option>
-            <option value="CATPPUCCIN_MOCHA">Catppuccin Mocha</option>
+            <option value="">Light</option>
+            <option value="CATPPUCCIN_LATTE">Latte</option>
+            <option value="GRUVBOX_DARK">Dark</option>
+            <option value="CATPPUCCIN_MOCHA">Mocha</option>
           </select>
         </div>
       </div>
