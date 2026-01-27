@@ -8,7 +8,13 @@ import helmet from "helmet";
 
 const app = express();
 
-app.use(cors());
+app.use(
+  cors({
+    origin: ["https://portfoliofrontend-delta-nine.vercel.app"],
+    methods: ["GET"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+  }),
+);
 app.use(helmet());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
