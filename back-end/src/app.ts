@@ -14,8 +14,8 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(speedLimiter);
 app.use(requestLimiter);
-app.use(blogRouter);
-app.use(tagRouter);
-app.use(projectRouter);
+app.use("/api/v1", blogRouter);
+app.use("/api/v1", tagRouter);
+app.use("/api/v1", projectRouter);
 
 export default app;
