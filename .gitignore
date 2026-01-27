@@ -1,9 +1,8 @@
-
-
 # Environment
 .pgdata/
 .env
 build/
+dist/
 
 # Javascript / Typescript
 node_modules/

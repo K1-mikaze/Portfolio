@@ -2,10 +2,17 @@ import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { HomePage, Portfolio } from "./pages/pagesBundle.jsx";
 import { useStorageState } from "./states/states.jsx";
+import {
+  API_URL,
+  BLOGS_SUBURL,
+  PROJECTS_SUBURL,
+  TAGS_SUBURL,
+} from "./configuration/environment.js";
 
 const API = {
-  blogs: "http://localhost:5678/blogs?lang=",
-  tags: "http://localhost:5678/tags",
+  blogs: `${API_URL}${BLOGS_SUBURL}`,
+  projects: `${API_URL}${PROJECTS_SUBURL}`,
+  tags: `${API_URL}${TAGS_SUBURL}`,
 };
 
 function App() {
@@ -62,6 +69,7 @@ function App() {
               handleTheme={handleTheme}
               language={language}
               handleLanguage={handleLanguage}
+              projects_url={API.projects}
               blogs_url={API.blogs}
             />
           }
