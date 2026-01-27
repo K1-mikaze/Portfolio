@@ -1,95 +1,82 @@
 import React from "react";
-import "./App.css";
-import { StaticAside } from "./components/StaticAside.jsx";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { HomePage, Portfolio } from "./pages/pagesBundle.jsx";
+import { useStorageState } from "./states/states.jsx";
+import {
+  API_URL,
+  BLOGS_SUBURL,
+  PROJECTS_SUBURL,
+  TAGS_SUBURL,
+} from "./configuration/environment.js";
 
-const blogsReducer = (state, action) => {
-  switch (action.type) {
-    case "BLOGS_FETCH_INIT":
-      return { ...state, isLoading: true, isError: false };
-
-    case "BLOGS_FETCH_SUCCESS":
-      return {
-        ...state,
-        isLoading: false,
-        isError: false,
-        data: action.payload,
-      };
-    case "BLOGS_FETCH_FAILURE":
-      return { ...state, isLoading: false, isError: true };
-
-    default:
-      throw new Error();
-  }
+const API = {
+  blogs: `${API_URL}${BLOGS_SUBURL}`,
+  projects: `${API_URL}${PROJECTS_SUBURL}`,
+  tags: `${API_URL}${TAGS_SUBURL}`,
 };
 
 function App() {
-  const url = "http://localhost:5678/blogs";
+  const userLanguage = navigator.language.substring(0, 2).toUpperCase();
 
-  const [blogs, dispatchBlogs] = React.useReducer(blogsReducer, {
-    data: [],
-    isError: false,
-    isLoading: false,
-  });
+  const [language, setLanguage] = useStorageState(
+    "language",
+    userLanguage === "EN" ? "EN" : "ES",
+  );
+  const [url, setUrl] = React.useState(`${API.blogs + language}`);
+  const [theme, setTheme] = useStorageState(
+    "theme",
+    window.matchMedia("(prefers-color-scheme: dark)").matches
+      ? "GRUVBOX_DARK"
+      : "",
+  );
 
-  const handleFetchBlogs = React.useCallback(async () => {
-    dispatchBlogs({ type: "BLOGS_FETCH_INIT" });
-    try {
-      const response = await fetch(url);
+  const handleTheme = () => {
+    setTheme(event.target.value);
+  };
 
-      if (!response) {
-        throw new Error(`Error ${response.status}`);
-      }
-
-      const data = await response.json();
-
-      dispatchBlogs({ type: "BLOGS_FETCH_SUCCESS", payload: data });
-    } catch (error) {
-      dispatchBlogs({ type: "BLOGS_FETCH_FAILURE" });
+  const handleLanguage = () => {
+    if (language === "EN") {
+      setLanguage("ES");
+      setUrl(`${API.blogs}ES`);
+    } else {
+      setLanguage("EN");
+      setUrl(`${API.blogs}EN`);
     }
-  }, [url]);
-
-  React.useEffect(() => {
-    handleFetchBlogs();
-  }, [handleFetchBlogs]);
-
+  };
   return (
-    <>
-      <div className="grid-container CATPPUCCIN_MOCHA">
-        <StaticAside />
-        <article>
-          {blogs.isError && <p>Something Went Wrong</p>}
-          {blogs.isLoading ? <p>Loading ...</p> : <Center list={blogs.data} />}
-        </article>
-        <SearchAside />
-      </div>
-    </>
+    <BrowserRouter>
+      <Routes>
+        <Route
+          path="/"
+          element={
+            <HomePage
+              language={language}
+              handleLanguage={handleLanguage}
+              theme={theme}
+              handleTheme={handleTheme}
+              url={url}
+              setUrl={setUrl}
+              tags_url={API.tags}
+              blogs_url={API.blogs}
+            />
+          }
+        />
+        <Route
+          path="/portfolio"
+          element={
+            <Portfolio
+              theme={theme}
+              handleTheme={handleTheme}
+              language={language}
+              handleLanguage={handleLanguage}
+              projects_url={API.projects}
+              blogs_url={API.blogs}
+            />
+          }
+        />
+      </Routes>
+    </BrowserRouter>
   );
 }
-
-const Center = ({ list }) => (
-  <ul>
-    {list.map((item) => (
-      <Card Item={item} />
-    ))}
-  </ul>
-);
-
-const Card = ({ Item }) => (
-  <li key={Item.id} id={Item.id} className="Card">
-    <a href={Item.url}>
-      <h1>{Item.title}</h1>
-      <h2>{Item.description}</h2>
-      <p>{Item.created_at}</p>
-    </a>
-  </li>
-);
-
-const SearchAside = () => {
-  return (
-    <aside className="right-aside">
-      <div className="aside-container"></div>
-    </aside>
-  );
-};
 
 export default App;

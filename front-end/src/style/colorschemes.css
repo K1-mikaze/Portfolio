@@ -8,16 +8,6 @@
   --text-secondary-clr: #504945;
 }
 
-.GRUVBOX_LIGHT {
-  --base-clr: #f9f5d7;
-  --base-secondary-clr: #fbf1c7;
-  --border-clr: #98971a;
-  --border-secondary-clr: #d79921;
-  --hover-clr: #ebdbb2;
-  --text-clr: #282828;
-  --text-secondary-clr: #504945;
-}
-
 .GRUVBOX_DARK {
   --base-clr: #1d2021;
   --base-secondary-clr: #282828;

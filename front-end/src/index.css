@@ -7,74 +7,8 @@
   padding: 0;
 }
 
-.static-aside {
-  grid-area: "static-aside";
-
-  img {
-    height: 250px;
-    border: var(--border-secondary-clr) 2px solid;
-    border-radius: 100%;
-    margin-bottom: 2rem;
-  }
-
-  li {
-    list-style: none;
-    font-size: 1.8rem;
-    margin: 2.5rem 0;
-    font-weight: 700;
-  }
-
-  li:hover {
-    color: var(--text-secondary-clr);
-  }
-
-  h1 {
-    font-size: 2.5rem;
-  }
-
-  h3 {
-    margin: 1rem 0;
-    color: var(--text-secondary-clr);
-  }
-
-  a {
-    text-decoration: none;
-    color: var(--text-clr);
-  }
-
-  .icons-container {
-    display: flex;
-    gap: 1rem;
-    margin-bottom: 1rem;
-
-    svg {
-      fill: var(--text-clr);
-      height: 35px;
-      width: 35px;
-    }
-  }
-
-  button {
-    color: var(--text-clr);
-    background-color: var(--base-secondary-clr);
-    border: var(--border-secondary-clr) 2px solid;
-    padding: 0.5rem 3rem;
-    border-radius: 5px;
-    margin-top: 1rem;
-    margin-bottom: 1rem;
-  }
-
-  button:hover {
-    background-color: var(--hover-clr);
-  }
-  select {
-    color: var(--text-clr);
-    background-color: var(--base-secondary-clr);
-    border: var(--border-secondary-clr) 2px solid;
-    padding: 0.5rem 0;
-    border-radius: 5px;
-  }
-  select:hover {
-    background-color: var(--hover-clr);
-  }
+html,
+body {
+  min-height: 100vh;
+  scroll-behavior: smooth;
 }
