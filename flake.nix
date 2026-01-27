@@ -20,15 +20,7 @@
 
     commonTools = with pkgs; [
       nodejs
-      prettier
-      biome
     ];
-
-    commonEnvironmentVariables = {
-      API_PORT = 5678;
-    };
-
-    mkEnv = extraEnv: commonEnvironmentVariables // extraEnv;
   in {
     # Environments
 
@@ -48,15 +40,9 @@
           echo "==> Welcome to the Back-end Development Environment <=="
         '';
 
-        env = mkEnv {
-          DATABASE_URL = "postgresql://nix_user:nix_pass@localhost:5432/nix_db";
-          DB_NAME = "nix_db";
-          DB_HOST = "localhost";
-          DB_PORT = 5432;
-          DB_USER = "nix_user";
-          DB_PASS = "nix_pass";
-          ENV_MODE = "development";
-        };
+        API_PORT = 5678;
+        DATABASE_URL = "postgresql://nix_user:nix_pass@localhost:5432/nix_db";
+        ENV_MODE = "development";
       };
 
       # Frontend
@@ -68,10 +54,6 @@
           echo "- npm install"
           echo "==> Welcome to the Back-end Development Environment <=="
         '';
-
-        env =
-          mkEnv {
-          };
       };
     };
 
@@ -107,19 +89,12 @@
       Backend = {
         type = "app";
         program = let
-          appEnvironment = {
-          };
           backend = self.packages."${system}".Backend;
-          runtimeDeps = with pkgs; [nodejs];
-          script = pkgs.writeShellScriptBin "run-app" ''
-            ${pkgs.lib.concatMapStrings (
-              name: "export ${name}='${toString (builtins.getAttr name appEnvironment)}'\n"
-            ) (builtins.attrNames appEnvironment)}
-            export PATH="${pkgs.lib.makeBinPath runtimeDeps}:$PATH"
+          script = pkgs.writeShellScriptBin "run-backend-app" ''
             cd ${backend}
             exec npm run start
           '';
-        in "${script}/bin/run-app";
+        in "${script}/bin/run-backend-app";
       };
 
       db-start = {

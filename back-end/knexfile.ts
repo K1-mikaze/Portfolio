@@ -1,16 +1,10 @@
 import type { Knex } from "knex";
-import environment from "./src/configuration/environment"; // Loads variables from .env file
+import environment from "./src/configuration/environment";
 
 const config: Record<string, Knex.Config> = {
   development: {
     client: "pg",
-    connection: {
-      host: environment.DB_HOST,
-      port: Number(environment.DB_PORT),
-      user: environment.DB_USER,
-      password: environment.DB_PASS,
-      database: environment.DB_NAME,
-    },
+    connection: environment.DATABASE_URL,
     migrations: {
       directory: "./src/database/migrations",
       extension: "ts",
@@ -23,7 +17,7 @@ const config: Record<string, Knex.Config> = {
 
   production: {
     client: "pg",
-    connection: environment.DATABASE_URL, // Often a single connection string
+    connection: environment.DATABASE_URL,
     migrations: {
       directory: "./src/database/migrations",
     },
