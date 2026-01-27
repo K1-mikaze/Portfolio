@@ -333,7 +333,7 @@ function Portfolio({
       const handleFetchProjects = React.useCallback(async () => {
         dispatchProjects({ type: "FETCH_INIT" });
         try {
-          const response = await fetch(`${blogs_url}${language}`);
+          const response = await fetch(`${projects_url}${language}`);
 
           if (!response) {
             throw new Error(`Error ${response.status}`);
