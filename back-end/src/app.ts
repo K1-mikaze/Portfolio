@@ -10,9 +10,7 @@ const app = express();
 
 app.use(
   cors({
-    origin: [
-      "https://portfoliofrontend-dkvq0mq5j-k1s-projects-ff94b943.vercel.app/",
-    ],
+    origin: ["https://sergioia.blog"],
     methods: ["GET"],
     allowedHeaders: ["Content-Type", "Authorization"],
   }),
