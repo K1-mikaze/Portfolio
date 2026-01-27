@@ -11,8 +11,7 @@ const app = express();
 app.use(
   cors({
     origin: [
-      "https://portfoliofrontend-delta-nine.vercel.app",
-      "https://portfoliofrontend-23sgrurct-k1s-projects-ff94b943.vercel.app",
+      "https://portfoliofrontend-dkvq0mq5j-k1s-projects-ff94b943.vercel.app/",
     ],
     methods: ["GET"],
     allowedHeaders: ["Content-Type", "Authorization"],
