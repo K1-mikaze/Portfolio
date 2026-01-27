@@ -10,7 +10,7 @@ const app = express();
 
 app.use(
   cors({
-    origin: ["https://sergioia.blog"],
+    origin: ["https://www.sergioia.blog"],
     methods: ["GET"],
     allowedHeaders: ["Content-Type", "Authorization"],
   }),
