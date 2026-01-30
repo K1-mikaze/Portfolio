@@ -328,22 +328,6 @@ DB_PASS=your_password
 - **Security Headers**: OWASP-compliant headers
 - **HTTPS Enforcement**: Secure communication protocols
 
-## 🤝 Contributing
-
-### Development Guidelines
-
-1. **Follow Architecture**: Adhere to documented patterns
-2. **Write Tests**: Include tests for new features
-3. **Update Documentation**: Keep docs current with changes
-4. **Code Quality**: Follow ESLint and TypeScript guidelines
-
-### Documentation Standards
-
-- **Comprehensive Coverage**: Document all architectural decisions
-- **Practical Examples**: Include code samples and use cases
-- **Cross-References**: Link between related documentation
-- **Regular Updates**: Maintain documentation accuracy
-
 ## 📞 Support
 
 ### Documentation Resources
@@ -363,7 +347,8 @@ DB_PASS=your_password
 
 ## 📋 Current Tasks
 
-- [ ] Implement a Environment variables verification for the backend
+- [ ] Make schemes for articles.
+- [ ] Make about this site page.
 - [ ] Add a was useful button to the Blogs
 - [ ] Implement full-text search functionality for blogs
 - [ ] Implement automated testing pipeline
