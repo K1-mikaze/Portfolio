@@ -21,6 +21,9 @@ import {
   MintSVG,
   UbuntuSVG,
   CodeSVG,
+  MysqlSVG,
+  PostgreSVG,
+  SQLiteSVG,
 } from "../components/SVG";
 
 function Portfolio({
@@ -241,7 +244,7 @@ function Portfolio({
     const Technologies = ({ text }) => {
       const technologies = [
         {
-          name: "Spring Boot",
+          name: "Spring",
           icon: <SpringSVG />,
           link: "https://spring.io/projects/spring-boot",
         },
@@ -285,6 +288,21 @@ function Portfolio({
           link: "https://www.hostinger.com/tutorials/what-is-css",
         },
         { name: "Git", icon: <GitSVG />, link: "https://git-scm.com/" },
+        {
+          name: "MySQL",
+          icon: <MysqlSVG />,
+          link: "https://www.oracle.com/mysql/what-is-mysql/",
+        },
+        {
+          name: "PostgreSQL",
+          icon: <PostgreSVG />,
+          link: "https://www.postgresql.org/about/",
+        },
+        {
+          name: "SQLite",
+          icon: <SQLiteSVG />,
+          link: "https://sqlite.org/",
+        },
         {
           name: "NixOS",
           icon: <NixSVG />,
